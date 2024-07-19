@@ -8,25 +8,17 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: technote-space/get-diff-action@v6
-        with:
-          PATTERNS: |
-            **/*.{ts,tsx,js,jsx,json}
-        id: get-diff
-
       - uses: actions/setup-node@v3
         with:
           node-version: '22'
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       - name: Run Prettier
         run: |
-          npx prettier --write $(echo "${{ steps.get-diff.outputs.files }}" | tr '\n' ' ')
-        env:
-          GIT_DIFF_FILTERED: ${{ steps.get-diff.outputs.files }}
+          npx prettier --write ./src/**/*.{ts,tsx,css}
 
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
