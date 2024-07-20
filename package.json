@@ -16,6 +16,10 @@
     "supabase:start": "supabase start",
     "supabase:stop": "supabase stop"
   },
+  "engines": {
+    "node": "22.4.x",
+    "npm": "^10"
+  },
   "dependencies": {
     "@supabase/ssr": "^0.4.0",
     "@supabase/supabase-js": "^2.44.4",
