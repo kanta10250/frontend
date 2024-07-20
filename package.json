@@ -18,7 +18,9 @@
   },
   "engines": {
     "node": "22.4.x",
-    "npm": "^10"
+    "yarn": "使うな！",
+    "pnpm": "使うな！",
+    "bun": "使うな！"
   },
   "dependencies": {
     "@supabase/ssr": "^0.4.0",
@@ -48,5 +50,6 @@
     "typescript": "^5",
     "vercel": "^35.1.0",
     "wrangler": "^3.65.0"
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }
