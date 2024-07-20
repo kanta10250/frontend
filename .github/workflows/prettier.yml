@@ -1,27 +1,19 @@
-name: Formatter
+name: prettier
 on: [pull_request]
-
 jobs:
   prettier:
+    name: runner / prettier
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: write
     steps:
-      - uses: actions/checkout@v3
-
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
         with:
-          node-version: '22'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm install -g prettier && npm install prettier-plugin-tailwindcss
-
-      - name: Run Prettier
-        run: |
+          ref: ${{ github.head_ref }}
+      - uses: actions/setup-node@v4
+      - run: |
+          npm install
           npm run format
-
-      - uses: stefanzweifel/git-auto-commit-action@v4
+      - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: Apply Prettier Change
-          add: 'true'
-          branch: ${{ github.head_ref }}
