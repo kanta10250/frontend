@@ -16,6 +16,11 @@
     "supabase:start": "supabase start",
     "supabase:stop": "supabase stop"
   },
+  "engines": {
+    "yarn": "使うな！",
+    "pnpm": "使うな！",
+    "bun": "使うな！"
+  },
   "dependencies": {
     "@supabase/ssr": "^0.4.0",
     "@supabase/supabase-js": "^2.44.4",
