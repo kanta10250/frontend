@@ -1,5 +1,7 @@
 'use strict';
 
+export const runtime = 'edge';
+
 import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
 import Image from 'next/image';
