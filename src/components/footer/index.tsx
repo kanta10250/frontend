@@ -35,6 +35,7 @@ const list = [
   },
 ];
 
+// TODO: 背景色を変更する方向でもいいかも、アイコンの色を変更すると若干見にくい
 export default function Footer() {
   return (
     <footer className="flex max-h-fit justify-center bg-white px-5 text-center text-zinc-900 md:hidden">
