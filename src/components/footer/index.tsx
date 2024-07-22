@@ -1,3 +1,5 @@
+'use client';
+
 import Map from './icons/map';
 import Pen from './icons/pen';
 import Home from './icons/home';
@@ -9,27 +11,27 @@ const list = [
   {
     title: 'Map',
     href: '/maps',
-    icon: <Map />,
+    icon: <Map fill={window.location.pathname.includes('maps')} />,
   },
   {
     title: 'Post',
     href: '/posts',
-    icon: <Pen />,
+    icon: <Pen fill={window.location.pathname.includes('posts')} />,
   },
   {
     title: 'Home',
     href: '/',
-    icon: <Home />,
+    icon: <Home fill={window.location.pathname === '/'} />,
   },
   {
     title: 'Favorite',
     href: '/favorites',
-    icon: <Favorite />,
+    icon: <Favorite fill={window.location.pathname.includes('favorites')} />,
   },
   {
     title: 'User',
     href: '/users/me',
-    icon: <User />,
+    icon: <User fill={window.location.pathname.includes('users')} />,
   },
 ];
 
