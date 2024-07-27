@@ -7,31 +7,42 @@ import Favorite from './icons/favorite';
 import User from './icons/user';
 import Link from 'next/link';
 
+import { tv } from 'tailwind-variants';
+
+const icon = tv({
+  base: 'cursor-pointer bg-white p-2 px-4 rounded-full',
+  variants: {
+    fill: {
+      true: 'bg-blue-100',
+    },
+  },
+});
+
 const list = [
   {
     title: 'Map',
     href: '/maps',
-    icon: <Map fill={window.location.pathname.includes('maps')} />,
+    icon: <Map />,
   },
   {
     title: 'Post',
     href: '/posts',
-    icon: <Pen fill={window.location.pathname.includes('posts')} />,
+    icon: <Pen />,
   },
   {
     title: 'Home',
     href: '/',
-    icon: <Home fill={window.location.pathname === '/'} />,
+    icon: <Home />,
   },
   {
     title: 'Favorite',
     href: '/favorites',
-    icon: <Favorite fill={window.location.pathname.includes('favorites')} />,
+    icon: <Favorite />,
   },
   {
     title: 'User',
     href: '/users/me',
-    icon: <User fill={window.location.pathname.includes('users')} />,
+    icon: <User />,
   },
 ];
 
@@ -39,9 +50,13 @@ const list = [
 export default function Footer() {
   return (
     <footer className="flex max-h-fit justify-center bg-white px-5 text-center text-zinc-900 md:hidden">
-      <div className="flex w-full max-w-md justify-between">
+      <div className="flex w-full max-w-md justify-between p-3">
         {list.map((item, index) => (
-          <Link key={index} href={item.href} className="cursor-pointer p-5">
+          <Link
+            key={index}
+            href={item.href}
+            className={icon({ fill: window.location.pathname === item.href })}
+          >
             {item.icon}
           </Link>
         ))}
