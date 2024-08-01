@@ -1,9 +1,10 @@
 'use client';
 
 import { createClient } from '@/utils/supabase/client';
-import Footer from '@/components/footer';
+import dynamic from 'next/dynamic';
+const Footer = dynamic(() => import('@/components/footer'), { ssr: false });
 
-export default function Login() {
+export default function LoginPage() {
   const supabase = createClient();
 
   return (
