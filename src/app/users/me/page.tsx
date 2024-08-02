@@ -15,12 +15,14 @@ export default async function MePage() {
   }
 
   const id = data.user.id;
-  const description = await supabase
+  const userData = await supabase
     .from('users')
-    .select('description')
+    .select('description, name')
     .eq('id', id);
 
-  const avatarUrl = `https://ui-avatars.com/api/?name=${data?.user?.user_metadata?.full_name}&size=512`;
+  console.log(userData?.data?.[0]);
+
+  const avatarUrl = `https://ui-avatars.com/api/?name=${userData?.data?.[0]?.name}&size=512`;
   const userName = data?.user?.user_metadata?.full_name;
 
   return (
@@ -35,7 +37,7 @@ export default async function MePage() {
         />
         <h1 className="mb-2 text-2xl font-semibold">{userName}</h1>
         <p className="mb-4 text-lg text-zinc-600">
-          {description?.data?.[0]?.description || 'No description'}
+          {userData?.data?.[0]?.description || 'No description'}
         </p>
       </div>
     </div>
