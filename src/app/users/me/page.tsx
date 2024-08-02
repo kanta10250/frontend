@@ -19,7 +19,6 @@ export default async function MePage() {
     .from('users')
     .select('description')
     .eq('id', id);
-  console.log(description);
 
   const avatarUrl = `https://ui-avatars.com/api/?name=${data?.user?.user_metadata?.full_name}&size=512`;
   const userName = data?.user?.user_metadata?.full_name;
