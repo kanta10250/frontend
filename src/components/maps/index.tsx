@@ -1,5 +1,4 @@
 import { MapContainer, TileLayer } from 'react-leaflet';
-import Footer from '@/components/footer';
 import 'leaflet/dist/leaflet.css';
 
 export default function Map() {
@@ -15,7 +14,6 @@ export default function Map() {
           url="https://tile.openstreetmap.jp/styles/maptiler-basic-ja/{z}/{x}/{y}.png"
         />
       </MapContainer>
-      <Footer />
     </div>
   );
 }
