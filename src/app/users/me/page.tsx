@@ -5,7 +5,6 @@ export const runtime = 'edge';
 import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
 import Image from 'next/image';
-import Link from 'next/link';
 
 export default async function MePage() {
   const supabase = createClient();
@@ -15,21 +14,30 @@ export default async function MePage() {
     redirect('/signin');
   }
 
-  const avatarUrl = `https://ui-avatars.com/api/?name=${data?.user?.user_metadata?.full_name}`;
+  const id = data.user.id;
+  const description = await supabase
+    .from('users')
+    .select('description')
+    .eq('id', id);
+  console.log(description);
+
+  const avatarUrl = `https://ui-avatars.com/api/?name=${data?.user?.user_metadata?.full_name}&size=512`;
   const userName = data?.user?.user_metadata?.full_name;
 
   return (
-    <div>
-      <Image
-        src={avatarUrl}
-        alt={userName}
-        width={100}
-        height={100}
-        className="rounded-full p-5"
-      />
-      <div className="p-5">
-        <h1>Welcome {userName}</h1>
-        <Link href="/logout">ログアウト</Link>
+    <div className="flex flex-1 flex-col items-center justify-center px-20">
+      <div className="flex w-full flex-col items-start rounded-lg border border-zinc-300 bg-white p-6">
+        <Image
+          src={avatarUrl}
+          alt={userName}
+          width={100}
+          height={100}
+          className="mb-4 h-20 w-20 rounded-full"
+        />
+        <h1 className="mb-2 text-2xl font-semibold">{userName}</h1>
+        <p className="mb-4 text-lg text-zinc-600">
+          {description?.data?.[0]?.description || 'No description'}
+        </p>
       </div>
     </div>
   );
