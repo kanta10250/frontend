@@ -3,5 +3,5 @@ export default function Container({
 }: {
   children: React.ReactNode;
 }): JSX.Element {
-  return <div className="container">{children}</div>;
+  return <div id="container">{children}</div>;
 }
