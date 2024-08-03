@@ -8,46 +8,34 @@ import User from './icons/user';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { tv } from 'tailwind-variants';
-
-const icon = tv({
-  base: 'cursor-pointer bg-white p-2 px-4 rounded-full',
-  variants: {
-    fill: {
-      true: 'bg-blue-100',
-    },
-  },
-});
-
 const list = [
   {
     title: 'Map',
     href: '/maps',
-    icon: <Map />,
+    icon: (pathname: string) => <Map fill={pathname === '/maps'} />,
   },
   {
     title: 'Post',
     href: '/posts',
-    icon: <Pen />,
+    icon: (pathname: string) => <Pen fill={pathname === '/posts'} />,
   },
   {
     title: 'Home',
     href: '/',
-    icon: <Home />,
+    icon: (pathname: string) => <Home fill={pathname === '/'} />,
   },
   {
     title: 'Favorite',
     href: '/favorites',
-    icon: <Favorite />,
+    icon: (pathname: string) => <Favorite fill={pathname === '/favorites'} />,
   },
   {
     title: 'User',
     href: '/users/me',
-    icon: <User />,
+    icon: (pathname: string) => <User fill={pathname === '/users/me'} />,
   },
 ];
 
-// TODO: 背景色を変更する方向でもいいかも、アイコンの色を変更すると若干見にくい
 export default function Footer() {
   const pathname = usePathname();
 
@@ -58,9 +46,9 @@ export default function Footer() {
           <Link
             key={index}
             href={item.href}
-            className={icon({ fill: pathname === item.href })}
+            className="cursor-pointer rounded-full bg-white p-2 px-4"
           >
-            {item.icon}
+            {item.icon(pathname)}
           </Link>
         ))}
       </div>
