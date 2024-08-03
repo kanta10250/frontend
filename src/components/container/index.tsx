@@ -6,16 +6,24 @@ export default function Container({
   return (
     <div id="container" className="flex h-screen flex-col">
       <div className="fixed left-0 top-0 z-[9999] hidden h-screen w-screen items-center justify-center bg-white md:flex">
-        <div className="flex w-fit flex-col items-center space-y-4">
-          <Icon />
-          <p className="text-center font-semibold">
-            現在このデバイスはサポートされていません
-            <br />
-            スマホでご利用ください
-          </p>
-        </div>
+        <NotSupported />
       </div>
       {children}
+    </div>
+  );
+}
+
+function NotSupported() {
+  return (
+    <div className="flex h-full w-full items-center justify-center">
+      <div className="flex flex-col items-center space-y-4">
+        <Icon />
+        <p className="text-center font-semibold">
+          現在このデバイスはサポートされていません
+          <br />
+          スマホでご利用ください
+        </p>
+      </div>
     </div>
   );
 }
