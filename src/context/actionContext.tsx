@@ -6,6 +6,7 @@ import { createContext, useState, useContext, ReactNode } from 'react';
 interface ActionContextType {
   buttonState: boolean;
   toggleButtonState: () => void;
+  disabledButtonState: () => void;
 }
 
 // Default value of context
@@ -20,8 +21,14 @@ export const ActionProvider: React.FC<{ children: ReactNode }> = ({
     setButtonState((prevState) => !prevState);
   };
 
+  const disabledButtonState = () => {
+    setButtonState(false);
+  };
+
   return (
-    <ActionContext.Provider value={{ buttonState, toggleButtonState }}>
+    <ActionContext.Provider
+      value={{ buttonState, toggleButtonState, disabledButtonState }}
+    >
       {children}
     </ActionContext.Provider>
   );

@@ -39,7 +39,7 @@ const list = [
 
 export default function Footer() {
   const pathname = usePathname();
-  const { toggleButtonState } = useActionContext();
+  const { toggleButtonState, disabledButtonState } = useActionContext();
 
   return (
     <footer className="flex max-h-fit justify-center bg-white px-5 text-center text-zinc-900 md:hidden">
@@ -57,6 +57,7 @@ export default function Footer() {
             <Link
               key={index}
               href={item.href}
+              onClick={disabledButtonState}
               className="cursor-pointer rounded-full bg-white p-2 px-4"
             >
               {item.icon(pathname)}
