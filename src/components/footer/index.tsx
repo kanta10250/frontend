@@ -8,6 +8,7 @@ import User from './icons/user';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useActionContext } from '@/context/actionContext';
+import { useRouter } from 'next/navigation';
 
 const list = [
   {
@@ -39,7 +40,13 @@ const list = [
 
 export default function Footer() {
   const pathname = usePathname();
+  const router = useRouter();
   const { toggleButtonState, disabledButtonState } = useActionContext();
+
+  function toggle() {
+    router.push('/maps');
+    toggleButtonState();
+  }
 
   return (
     <footer className="flex max-h-fit justify-center bg-white px-5 text-center text-zinc-900 md:hidden">
@@ -48,7 +55,7 @@ export default function Footer() {
           item.title === 'Post' ? (
             <button
               key={index}
-              onClick={toggleButtonState}
+              onClick={toggle}
               className="cursor-pointer rounded-full bg-white p-2 px-4"
             >
               {item.icon('true')}
