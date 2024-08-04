@@ -1,9 +1,6 @@
 'use client';
 
 import { createClient } from '@/utils/supabase/client';
-import dynamic from 'next/dynamic';
-
-const Map = dynamic(() => import('@/components/maps'), { ssr: false });
 
 export default function Posts() {
   const supabase = createClient();
@@ -39,9 +36,6 @@ export default function Posts() {
 
   return (
     <div className="flex h-full w-full flex-col">
-      <div className="flex h-1/2 flex-col">
-        <Map />
-      </div>
       <div className="h-1/2 overflow-scroll p-5">
         <h1 className="mb-4 text-2xl font-bold">投稿</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
