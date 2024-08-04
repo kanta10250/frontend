@@ -7,6 +7,7 @@ import Favorite from './icons/favorite';
 import User from './icons/user';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useActionContext } from '@/context/actionContext';
 
 const list = [
   {
@@ -17,7 +18,7 @@ const list = [
   {
     title: 'Post',
     href: '/posts',
-    icon: (pathname: string) => <Pen fill={pathname === '/posts'} />,
+    icon: (isPost: string) => <Pen fill={isPost === 'true'} />,
   },
   {
     title: 'Home',
@@ -38,19 +39,31 @@ const list = [
 
 export default function Footer() {
   const pathname = usePathname();
+  const { toggleButtonState, disabledButtonState } = useActionContext();
 
   return (
     <footer className="flex max-h-fit justify-center bg-white px-5 text-center text-zinc-900 md:hidden">
       <div className="flex w-full max-w-md justify-between p-3">
-        {list.map((item, index) => (
-          <Link
-            key={index}
-            href={item.href}
-            className="cursor-pointer rounded-full bg-white p-2 px-4"
-          >
-            {item.icon(pathname)}
-          </Link>
-        ))}
+        {list.map((item, index) =>
+          item.title === 'Post' ? (
+            <button
+              key={index}
+              onClick={toggleButtonState}
+              className="cursor-pointer rounded-full bg-white p-2 px-4"
+            >
+              {item.icon('true')}
+            </button>
+          ) : (
+            <Link
+              key={index}
+              href={item.href}
+              onClick={disabledButtonState}
+              className="cursor-pointer rounded-full bg-white p-2 px-4"
+            >
+              {item.icon(pathname)}
+            </Link>
+          ),
+        )}
       </div>
     </footer>
   );

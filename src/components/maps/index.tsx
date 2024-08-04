@@ -1,5 +1,7 @@
+import Navigation from '@/components/navigationbar';
 import { MapContainer, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
+import './style.css';
 
 export default function Map() {
   return (
@@ -13,6 +15,7 @@ export default function Map() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://tile.openstreetmap.jp/styles/maptiler-basic-ja/{z}/{x}/{y}.png"
         />
+        <Navigation />
       </MapContainer>
     </div>
   );
