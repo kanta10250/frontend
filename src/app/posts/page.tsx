@@ -42,15 +42,15 @@ export default function Posts() {
       <div className="flex h-1/2 flex-col">
         <Map />
       </div>
-      <div className="h-1/2">
-        <h1 className="mb-4 text-2xl font-bold">Posts</h1>
+      <div className="h-1/2 overflow-scroll p-5">
+        <h1 className="mb-4 text-2xl font-bold">投稿</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label
               htmlFor="name"
               className="block text-sm font-medium text-gray-700"
             >
-              Name
+              公園 / 建物名
             </label>
             <input
               type="text"
@@ -66,7 +66,7 @@ export default function Posts() {
               htmlFor="category"
               className="block text-sm font-medium text-gray-700"
             >
-              Category
+              一緒に行ける動物
             </label>
             <div className="mt-1">
               <label className="inline-flex items-center">
@@ -94,7 +94,7 @@ export default function Posts() {
               htmlFor="description"
               className="block text-sm font-medium text-gray-700"
             >
-              Description
+              公園 / 建物の説明
             </label>
             <textarea
               placeholder="Description"
@@ -109,7 +109,7 @@ export default function Posts() {
               htmlFor="url"
               className="block text-sm font-medium text-gray-700"
             >
-              URL
+              Google Map URL
             </label>
             <input
               type="url"
@@ -124,7 +124,7 @@ export default function Posts() {
               htmlFor="websiteUrl"
               className="block text-sm font-medium text-gray-700"
             >
-              Website URL
+              ウェブサイトのURL
             </label>
             <input
               type="url"
