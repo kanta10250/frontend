@@ -11,7 +11,7 @@ export default function Maps() {
   console.log(buttonState);
 
   return (
-    <div className="flex h-full flex-col bg-stone-200">
+    <div className="relative flex h-full flex-col bg-stone-200">
       <Map />
       {buttonState ? <Posts /> : null}
     </div>
