@@ -18,7 +18,7 @@ const list = [
   {
     title: 'Post',
     href: '/posts',
-    icon: (pathname: string) => <Pen fill={pathname === '/posts'} />,
+    icon: (isPost: string) => <Pen fill={isPost === 'true'} />,
   },
   {
     title: 'Home',
@@ -51,7 +51,7 @@ export default function Footer() {
               onClick={toggleButtonState}
               className="cursor-pointer rounded-full bg-white p-2 px-4"
             >
-              {item.icon(pathname)}
+              {item.icon('true')}
             </button>
           ) : (
             <Link
