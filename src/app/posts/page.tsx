@@ -34,7 +34,7 @@ export default function Posts() {
   };
 
   return (
-    <div className="mx-auto max-w-md p-4">
+    <div className="flex h-full w-full flex-col px-5">
       <h1 className="mb-4 text-2xl font-bold">Posts</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
