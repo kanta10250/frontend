@@ -1,0 +1,4 @@
+.leaflet-control-zoom-in,
+.leaflet-control-zoom-out {
+  display: none !important;
+}
