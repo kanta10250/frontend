@@ -1,9 +1,12 @@
 'use client';
 
+import { useMarkerContext } from '@/context/markerContext';
 import { createClient } from '@/utils/supabase/client';
 
 export default function Posts() {
   const supabase = createClient();
+
+  const { markerState } = useMarkerContext();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -13,12 +16,19 @@ export default function Posts() {
     const description = formData.get('description') as string;
     const url = formData.get('url') as string;
 
+    const markerLocation = markerState?.getLatLng();
+
+    if (!markerLocation) {
+      alert('Please select a location on the map');
+      return;
+    }
+
     const { data, error } = await supabase.from('posts').insert([
       {
         name,
         animals: category,
         description,
-        location: 'Tokyo',
+        location: `${markerLocation.lat},${markerLocation.lng}`,
         google_map_url: url,
         created_at: new Date(),
         updated_at: new Date(),

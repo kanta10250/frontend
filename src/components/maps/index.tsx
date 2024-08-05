@@ -2,6 +2,7 @@ import Navigation from '@/components/navigationbar';
 import { MapContainer, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import './style.css';
+import MarkerEvent from './events/MarkerEvent';
 
 export default function Map() {
   return (
@@ -16,6 +17,7 @@ export default function Map() {
           url="https://tile.openstreetmap.jp/styles/maptiler-basic-ja/{z}/{x}/{y}.png"
         />
         <Navigation />
+        <MarkerEvent />
       </MapContainer>
     </div>
   );
