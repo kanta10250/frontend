@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { ActionProvider } from '@/context/actionContext';
+import { MarkerProvider } from '@/context/markerContext';
 import { Noto_Sans_JP } from 'next/font/google';
 import Container from '@/components/container';
 import Footer from '@/components/footer';
@@ -20,12 +21,14 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body className={`flex h-screen flex-col ${notoSansJP.className}`}>
-        <ActionProvider>
-          <Container>
-            {children}
-            <Footer />
-          </Container>
-        </ActionProvider>
+        <MarkerProvider>
+          <ActionProvider>
+            <Container>
+              {children}
+              <Footer />
+            </Container>
+          </ActionProvider>
+        </MarkerProvider>
       </body>
     </html>
   );
