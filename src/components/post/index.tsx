@@ -4,7 +4,7 @@ import { useMarkerContext } from '@/context/markerContext';
 import { createClient } from '@/utils/supabase/client';
 import { useActionContext } from '@/context/actionContext';
 import { useState } from 'react';
-import { X, XIcon } from 'lucide-react';
+import { XIcon } from 'lucide-react';
 
 export default function Posts() {
   const supabase = createClient();
@@ -33,12 +33,17 @@ export default function Posts() {
       return;
     }
 
+    const locationText = `${markerLocation.lat},${markerLocation.lng}`.replace(
+      'undefined',
+      '',
+    );
+
     const { data, error } = await supabase.from('posts').insert([
       {
         name,
         animals: category,
         description,
-        location: `${markerLocation.lat},${markerLocation.lng}`,
+        location: locationText,
         keywords: nowLocation,
         google_map_url: url,
         created_at: new Date(),
@@ -59,7 +64,7 @@ export default function Posts() {
   };
 
   return (
-    <div className="absolute bottom-0 left-0 z-[99999] flex w-full flex-col">
+    <div className="absolute bottom-0 left-0 z-[9998] flex w-full flex-col">
       <div className="h-1/2 overflow-scroll p-5 px-5">
         <div className="rounded-xl bg-white p-5">
           <div className="flex max-w-full">

@@ -15,7 +15,7 @@ export default function Container({
 
 function NotSupported() {
   return (
-    <div className="flex h-full w-full items-center justify-center">
+    <div className="z-[9999] flex h-full w-full items-center justify-center">
       <div className="flex flex-col items-center space-y-4">
         <Icon />
         <p className="text-center font-semibold">
