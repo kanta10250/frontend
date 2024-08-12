@@ -2,7 +2,7 @@ export const runtime = 'edge';
 
 export default function NotFound(): JSX.Element {
   return (
-    <div className="absolute left-0 top-0 z-[99999] flex h-screen w-screen items-center justify-center bg-white">
+    <div className="absolute left-0 top-0 z-[9999] flex h-screen w-screen items-center justify-center bg-white">
       <div className="flex h-full w-full items-center justify-center">
         <div className="flex flex-col items-center space-y-4">
           <p className="flex flex-col text-center font-semibold">
