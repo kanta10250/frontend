@@ -21,8 +21,7 @@ L.Icon.Default.mergeOptions({
 });
 
 export default function MarkerEvent() {
-  const { markerState, nowLocation, setMarkerState, setNowLocation } =
-    useMarkerContext();
+  const { markerState, setMarkerState, setNowLocation } = useMarkerContext();
 
   const map = useMapEvent('click', async (location) => {
     if (markerState) {
