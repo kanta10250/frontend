@@ -5,9 +5,9 @@ import L from 'leaflet';
 
 // Type definition of context
 interface MarkerContextType {
-  markerState: L.Marker | undefined;
+  markerState: L.Marker | null | undefined;
   nowLocation: string;
-  setMarkerState: (marker: L.Marker) => void;
+  setMarkerState: (marker: L.Marker | null) => void;
   setNowLocation: (location: string) => void;
 }
 
@@ -17,7 +17,7 @@ const MarkerContext = createContext<MarkerContextType | undefined>(undefined);
 export const MarkerProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [markerState, setMarkerState] = useState<L.Marker>();
+  const [markerState, setMarkerState] = useState<L.Marker | null>();
   const [nowLocation, setNowLocation] = useState<string>('');
 
   return (

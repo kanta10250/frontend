@@ -8,6 +8,7 @@ import User from './icons/user';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useActionContext } from '@/context/actionContext';
+import { useMarkerContext } from '@/context/markerContext';
 import { useRouter } from 'next/navigation';
 
 const list = [
@@ -41,11 +42,21 @@ const list = [
 export default function Footer() {
   const pathname = usePathname();
   const router = useRouter();
+  const { markerState, setMarkerState } = useMarkerContext();
   const { toggleButtonState, disabledButtonState } = useActionContext();
 
   function toggle() {
     router.push('/maps');
     toggleButtonState();
+  }
+
+  function togglePage() {
+    if (markerState) {
+      markerState.remove();
+      setMarkerState(null);
+    }
+
+    disabledButtonState();
   }
 
   return (
@@ -64,7 +75,7 @@ export default function Footer() {
             <Link
               key={index}
               href={item.href}
-              onClick={disabledButtonState}
+              onClick={togglePage}
               className="cursor-pointer rounded-full bg-white p-2 px-4"
             >
               {item.icon(pathname)}
