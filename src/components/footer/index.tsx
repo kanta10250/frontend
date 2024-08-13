@@ -15,7 +15,7 @@ const list = [
   {
     title: 'Map',
     href: '/maps',
-    icon: (pathname: string) => <Map fill={pathname === '/maps'} />,
+    icon: (isMap: string) => <Map fill={isMap !== 'true'} />,
   },
   {
     title: 'Post',
@@ -43,7 +43,8 @@ export default function Footer() {
   const pathname = usePathname();
   const router = useRouter();
   const { markerState, setMarkerState } = useMarkerContext();
-  const { toggleButtonState, disabledButtonState } = useActionContext();
+  const { buttonState, toggleButtonState, disabledButtonState } =
+    useActionContext();
 
   function toggle() {
     router.push('/maps');
@@ -63,13 +64,13 @@ export default function Footer() {
     <footer className="flex max-h-fit justify-center bg-white px-5 text-center text-zinc-900 md:hidden">
       <div className="flex w-full max-w-md justify-between p-3">
         {list.map((item, index) =>
-          item.title === 'Post' ? (
+          item.title === 'Post' || item.title === 'Map' ? (
             <button
               key={index}
               onClick={toggle}
               className="cursor-pointer rounded-full bg-white p-2 px-4"
             >
-              {item.icon('true')}
+              {item.icon(buttonState ? 'true' : 'false')}
             </button>
           ) : (
             <Link
