@@ -83,7 +83,7 @@ export default function Posts() {
   };
 
   return (
-    <div className="absolute bottom-0 left-0 z-[99999] flex w-full flex-col">
+    <div className="absolute bottom-0 left-0 z-[999] flex w-full flex-col">
       <div className="h-1/2 overflow-scroll p-5 px-5">
         <div className="rounded-xl bg-white p-5">
           <div className="flex max-w-full">
