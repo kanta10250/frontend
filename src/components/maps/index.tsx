@@ -3,8 +3,23 @@ import { MapContainer, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import './style.css';
 import MarkerEvent from './events/MarkerEvent';
+import { useMap } from 'react-leaflet';
+import L from 'leaflet';
 
-export default function Map() {
+function FlyToLocation({ pinnedLocation }: { pinnedLocation?: string }) {
+  const map = useMap();
+
+  if (pinnedLocation) {
+    const location = pinnedLocation.split(',');
+
+    L.marker([Number(location[0]), Number(location[1])]).addTo(map);
+    map.flyTo([Number(location[0]), Number(location[1])]);
+  }
+
+  return null;
+}
+
+export default function Map(props: { pinnedLocation?: string }) {
   return (
     <div className="flex h-full flex-col">
       <MapContainer
@@ -18,6 +33,7 @@ export default function Map() {
         />
         <Navigation />
         <MarkerEvent />
+        <FlyToLocation pinnedLocation={props.pinnedLocation} />
       </MapContainer>
     </div>
   );

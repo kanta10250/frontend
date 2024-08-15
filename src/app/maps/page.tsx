@@ -1,7 +1,7 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import Posts from '@/components/posts';
+import Posts from '@/components/post';
 import { useActionContext } from '@/context/actionContext';
 
 const Map = dynamic(() => import('@/components/maps'), { ssr: false });
