@@ -1,3 +1,5 @@
+export const runtime = 'edge';
+
 import PostDetails from '@/components/post/details';
 import { createClient } from '@/utils/supabase/server';
 
