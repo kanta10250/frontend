@@ -6,11 +6,20 @@ import { useActionContext } from '@/context/actionContext';
 import { useState } from 'react';
 import { XIcon } from 'lucide-react';
 
+interface Address {
+  city?: string;
+  suburb?: string;
+}
+
+interface Data {
+  address?: Address;
+}
+
 export default function Posts() {
   const supabase = createClient();
   const { toggleButtonState } = useActionContext();
 
-  const { markerState, nowLocation } = useMarkerContext();
+  const { markerState } = useMarkerContext();
   const [complete, SetCompleteSubmit] = useState<boolean>(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -28,7 +37,22 @@ export default function Posts() {
       return;
     }
 
-    if (!nowLocation) {
+    const lat = markerLocation.lat;
+    const lng = markerLocation.lng;
+
+    // reverse geocoding
+    const response = await fetch(
+      `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`,
+    );
+    const responseData: Data = await response.json();
+    const address = responseData.address;
+
+    let nowLocation = '';
+    if (address) {
+      nowLocation = `${address.city}${address.suburb}`;
+    }
+
+    if (nowLocation === '') {
       alert('Please select a location on the map');
       return;
     }
@@ -64,7 +88,7 @@ export default function Posts() {
   };
 
   return (
-    <div className="absolute bottom-0 left-0 z-[9998] flex w-full flex-col">
+    <div className="absolute bottom-0 left-0 z-[999] flex w-full flex-col">
       <div className="h-1/2 overflow-scroll p-5 px-5">
         <div className="rounded-xl bg-white p-5">
           <div className="flex max-w-full">

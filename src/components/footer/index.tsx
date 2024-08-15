@@ -8,13 +8,14 @@ import User from './icons/user';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useActionContext } from '@/context/actionContext';
+import { useMarkerContext } from '@/context/markerContext';
 import { useRouter } from 'next/navigation';
 
 const list = [
   {
     title: 'Map',
     href: '/maps',
-    icon: (pathname: string) => <Map fill={pathname === '/maps'} />,
+    icon: (isMap: string) => <Map fill={isMap !== 'true'} />,
   },
   {
     title: 'Post',
@@ -41,30 +42,41 @@ const list = [
 export default function Footer() {
   const pathname = usePathname();
   const router = useRouter();
-  const { toggleButtonState, disabledButtonState } = useActionContext();
+  const { markerState, setMarkerState } = useMarkerContext();
+  const { buttonState, toggleButtonState, disabledButtonState } =
+    useActionContext();
 
   function toggle() {
     router.push('/maps');
     toggleButtonState();
   }
 
+  function togglePage() {
+    if (markerState) {
+      markerState.remove();
+      setMarkerState(null);
+    }
+
+    disabledButtonState();
+  }
+
   return (
     <footer className="flex max-h-fit justify-center bg-white px-5 text-center text-zinc-900 md:hidden">
       <div className="flex w-full max-w-md justify-between p-3">
         {list.map((item, index) =>
-          item.title === 'Post' ? (
+          item.title === 'Post' || item.title === 'Map' ? (
             <button
               key={index}
               onClick={toggle}
               className="cursor-pointer rounded-full bg-white p-2 px-4"
             >
-              {item.icon('true')}
+              {item.icon(buttonState ? 'true' : 'false')}
             </button>
           ) : (
             <Link
               key={index}
               href={item.href}
-              onClick={disabledButtonState}
+              onClick={togglePage}
               className="cursor-pointer rounded-full bg-white p-2 px-4"
             >
               {item.icon(pathname)}

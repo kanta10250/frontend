@@ -59,7 +59,7 @@ export default function Navigation() {
     <>
       <div
         id="navigation"
-        className="absolute top-5 z-[9998] mb-8 flex w-full items-end justify-between px-5"
+        className="absolute top-5 z-[999] mb-8 flex w-full items-end justify-between px-5"
       >
         {map && (
           <div className="flex flex-col items-center rounded-xl bg-white p-2">
