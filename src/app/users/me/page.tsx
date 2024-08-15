@@ -7,13 +7,12 @@ import { redirect } from 'next/navigation';
 import Image from 'next/image';
 
 export default async function MePage() {
-  const supabase = createClient();
-  const { data, error } = await supabase.auth.getUser();
+    const supabase = createClient();
+    const { data, error } = await supabase.auth.getUser();
 
-  if (error || !data?.user) {
-    redirect('/signin');
-  }
-
+    if (error || !data?.user) {
+        redirect('/login');
+    }
   const id = data.user.id;
   const userData = await supabase
     .from('users')
