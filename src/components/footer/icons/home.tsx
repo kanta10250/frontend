@@ -8,7 +8,7 @@ export default function Home({ fill = false }: { fill?: boolean }) {
         width="24px"
         fill="#000000"
       >
-        <path d="M160-120v-480l320-240 320 240v480H560v-280H400v280H160Z" />
+        <path d="M136-94v-517l344-257 344 257v517H570v-306H390v306H136Z" />
       </svg>
     );
   }

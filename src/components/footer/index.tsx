@@ -6,60 +6,83 @@ import Home from './icons/home';
 import Favorite from './icons/favorite';
 import User from './icons/user';
 import Link from 'next/link';
-
-import { tv } from 'tailwind-variants';
-
-const icon = tv({
-  base: 'cursor-pointer bg-white p-2 px-4 rounded-full',
-  variants: {
-    fill: {
-      true: 'bg-blue-100',
-    },
-  },
-});
+import { usePathname } from 'next/navigation';
+import { useActionContext } from '@/context/actionContext';
+import { useMarkerContext } from '@/context/markerContext';
+import { useRouter } from 'next/navigation';
 
 const list = [
   {
     title: 'Map',
     href: '/maps',
-    icon: <Map />,
+    icon: (isMap: string) => <Map fill={isMap !== 'true'} />,
   },
   {
     title: 'Post',
     href: '/posts',
-    icon: <Pen />,
+    icon: (isPost: string) => <Pen fill={isPost === 'true'} />,
   },
   {
     title: 'Home',
     href: '/',
-    icon: <Home />,
+    icon: (pathname: string) => <Home fill={pathname === '/'} />,
   },
   {
     title: 'Favorite',
     href: '/favorites',
-    icon: <Favorite />,
+    icon: (pathname: string) => <Favorite fill={pathname === '/favorites'} />,
   },
   {
     title: 'User',
     href: '/users/me',
-    icon: <User />,
+    icon: (pathname: string) => <User fill={pathname === '/users/me'} />,
   },
 ];
 
-// TODO: 背景色を変更する方向でもいいかも、アイコンの色を変更すると若干見にくい
 export default function Footer() {
+  const pathname = usePathname();
+  const router = useRouter();
+  const { markerState, setMarkerState } = useMarkerContext();
+  const { buttonState, toggleButtonState, disabledButtonState } =
+    useActionContext();
+
+  function toggle() {
+    router.push('/maps');
+    toggleButtonState();
+  }
+
+  function togglePage() {
+    if (markerState) {
+      markerState.remove();
+      setMarkerState(null);
+    }
+
+    disabledButtonState();
+  }
+
   return (
     <footer className="flex max-h-fit justify-center bg-white px-5 text-center text-zinc-900 md:hidden">
       <div className="flex w-full max-w-md justify-between p-3">
-        {list.map((item, index) => (
-          <Link
-            key={index}
-            href={item.href}
-            className={icon({ fill: window.location.pathname === item.href })}
-          >
-            {item.icon}
-          </Link>
-        ))}
+        {list.map((item, index) =>
+          item.title === 'Post' || item.title === 'Map' ? (
+            <button
+              key={index}
+              onClick={toggle}
+              className="cursor-pointer rounded-full bg-white p-2 px-4"
+            >
+              {item.icon(buttonState ? 'true' : 'false')}
+            </button>
+          ) : (
+            <Link
+              key={index}
+              href={item.href}
+              onClick={togglePage}
+              className="cursor-pointer rounded-full bg-white p-2 px-4"
+            >
+              {item.icon(pathname)}
+            </Link>
+          ),
+        )}
       </div>
     </footer>
   );
