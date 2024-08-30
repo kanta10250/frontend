@@ -1,11 +1,13 @@
 'use client';
 
 import { createClient } from '@/utils/supabase/client';
+import { redirect } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
 export default function Home() {
   const supabase = createClient();
   const [data, setData] = useState<any | null>(null);
+  const [user, setUser] = useState<any | null>(null);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -14,8 +16,20 @@ export default function Home() {
       setData(data);
     };
 
+    const getMe = async () => {
+      const { data, error } = await supabase.auth.getUser();
+      setUser(data.user);
+    };
+
+    getMe();
     fetchPosts();
   }, [supabase]);
+
+  async function favoritePost(post_id: string) {
+    await supabase
+      .from('favorites')
+      .insert({ user_id: user.id, post_id: post_id });
+  }
 
   return (
     <div className="flex flex-1 flex-col items-center justify-center overflow-scroll">
@@ -31,6 +45,12 @@ export default function Home() {
               <p className="mb-4 text-lg text-zinc-600">{post.animals}</p>
               <p className="mb-4 text-lg text-zinc-600">{post.created_at}</p>
               <p className="mb-4 text-lg text-zinc-600">{post.updated_at}</p>
+              <button
+                className="rounded-lg border p-2"
+                onClick={() => favoritePost(post.id)}
+              >
+                この投稿をいいね
+              </button>
             </div>
           ))}
         </div>
