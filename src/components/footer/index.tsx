@@ -12,12 +12,16 @@ const list = [
   {
     title: 'Map',
     href: '/maps',
-    icon: (isMap: string) => <Map strokeWidth={isMap !== 'true' ? 2 : 2.5} />,
+    icon: (state: string, pathname?: string) => (
+      <Map strokeWidth={state === 'false' && pathname === '/maps' ? 2.5 : 2} />
+    ),
   },
   {
     title: 'Post',
     href: '/posts',
-    icon: (isPost: string) => <Pen strokeWidth={isPost !== 'true' ? 2 : 2.5} />,
+    icon: (state: string, _pathname?: string) => (
+      <Pen strokeWidth={state === 'true' ? 2.5 : 2} />
+    ),
   },
   {
     title: 'Home',
@@ -73,7 +77,7 @@ export default function Footer() {
               onClick={toggle}
               className="cursor-pointer rounded-full bg-white p-2 px-4"
             >
-              {item.icon(buttonState ? 'true' : 'false')}
+              {item.icon(buttonState ? 'true' : 'false', pathname)}
             </button>
           ) : (
             <Link
