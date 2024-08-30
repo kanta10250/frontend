@@ -1,16 +1,41 @@
-import { createClient } from '@/utils/supabase/server';
+'use client';
 
-export const runtime = 'edge';
+import { createClient } from '@/utils/supabase/client';
+import { redirect } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
-export default async function Favorites() {
+export default function Favorites() {
   const supabase = createClient();
+  const [favorites, setFavorites] = useState<any | null>(null);
+  const [user, setUser] = useState<any | null>(null);
 
-  const auth = await supabase.auth.getUser();
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data: auth, error } = await supabase.auth.getUser();
+      if (error || !auth?.user) {
+        redirect('/login');
+      }
+      const { data: favorites } = await supabase
+        .from('favorites')
+        .select('*, posts(*)')
+        .eq('user_id', auth.user.id);
+      setUser(auth.user);
+      setFavorites(favorites);
+    };
 
-  const { data: favorites } = await supabase
-    .from('favorites')
-    .select('*, posts(*)')
-    .eq('user_id', auth.data.user?.id);
+    fetchData();
+  }, [supabase]);
+
+  async function removeFavoritePost(post_id: string) {
+    setFavorites(
+      favorites.filter((favorite: any) => favorite.posts.id != post_id),
+    );
+    await supabase
+      .from('favorites')
+      .delete()
+      .eq('user_id', user.id)
+      .eq('post_id', post_id);
+  }
 
   return (
     <div className="flex flex-1 flex-col items-center justify-center overflow-scroll">
@@ -34,6 +59,12 @@ export default async function Favorites() {
               <p className="mb-4 text-lg text-zinc-600">
                 {favorites.posts.updated_at}
               </p>
+              <button
+                className="rounded-lg border p-2"
+                onClick={() => removeFavoritePost(favorites.posts.id)}
+              >
+                いいねを解除する
+              </button>
             </div>
           ))}
         </div>
