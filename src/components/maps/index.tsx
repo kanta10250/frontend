@@ -5,6 +5,7 @@ import './style.css';
 import MarkerEvent from './events/MarkerEvent';
 import { useMap } from 'react-leaflet';
 import L from 'leaflet';
+import MoveEvent from './events/MoveEvent';
 
 function FlyToLocation({ pinnedLocation }: { pinnedLocation?: string }) {
   const map = useMap();
@@ -33,6 +34,7 @@ export default function Map(props: { pinnedLocation?: string }) {
         />
         <Navigation />
         <MarkerEvent />
+        <MoveEvent />
         <FlyToLocation pinnedLocation={props.pinnedLocation} />
       </MapContainer>
     </div>

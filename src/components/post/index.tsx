@@ -5,15 +5,7 @@ import { createClient } from '@/utils/supabase/client';
 import { useActionContext } from '@/context/actionContext';
 import { useState } from 'react';
 import { XIcon } from 'lucide-react';
-
-interface Address {
-  city?: string;
-  suburb?: string;
-}
-
-interface Data {
-  address?: Address;
-}
+import { fetchLocation } from '../../utils/react-leaflet/fetchLocation';
 
 export default function Posts() {
   const supabase = createClient();
@@ -40,27 +32,13 @@ export default function Posts() {
     const lat = markerLocation.lat;
     const lng = markerLocation.lng;
 
-    // reverse geocoding
-    const response = await fetch(
-      `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`,
-    );
-    const responseData: Data = await response.json();
-    const address = responseData.address;
-
-    let nowLocation = '';
-    if (address) {
-      nowLocation = `${address.city}${address.suburb}`;
-    }
+    const nowLocation = await fetchLocation(lat, lng);
+    const locationText = `${markerLocation.lat},${markerLocation.lng}`;
 
     if (nowLocation === '') {
       alert('Please select a location on the map');
       return;
     }
-
-    const locationText = `${markerLocation.lat},${markerLocation.lng}`.replace(
-      'undefined',
-      '',
-    );
 
     const { data, error } = await supabase.from('posts').insert([
       {
