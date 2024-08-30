@@ -61,7 +61,6 @@ export default function Home() {
   }
 
   function checkFavorite(post_id: string) {
-    console.log(favorites);
     return favorites?.some((favorite) => favorite.post_id === post_id);
   }
 
