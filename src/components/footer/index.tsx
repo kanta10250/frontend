@@ -1,41 +1,44 @@
 'use client';
 
-import Map from './icons/map';
-import Pen from './icons/pen';
-import Home from './icons/home';
-import Favorite from './icons/favorite';
-import User from './icons/user';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useActionContext } from '@/context/actionContext';
 import { useMarkerContext } from '@/context/markerContext';
 import { useRouter } from 'next/navigation';
 
+import { Map, Pen, House, Heart, User } from 'lucide-react';
+
 const list = [
   {
     title: 'Map',
     href: '/maps',
-    icon: (isMap: string) => <Map fill={isMap !== 'true'} />,
+    icon: (isMap: string) => <Map strokeWidth={isMap !== 'true' ? 2 : 2.5} />,
   },
   {
     title: 'Post',
     href: '/posts',
-    icon: (isPost: string) => <Pen fill={isPost === 'true'} />,
+    icon: (isPost: string) => <Pen strokeWidth={isPost !== 'true' ? 2 : 2.5} />,
   },
   {
     title: 'Home',
     href: '/',
-    icon: (pathname: string) => <Home fill={pathname === '/'} />,
+    icon: (pathname: string) => (
+      <House strokeWidth={pathname === '/' ? 2.5 : 2} />
+    ),
   },
   {
     title: 'Favorite',
     href: '/favorites',
-    icon: (pathname: string) => <Favorite fill={pathname === '/favorites'} />,
+    icon: (pathname: string) => (
+      <Heart strokeWidth={pathname === '/favorites' ? 2.5 : 2} />
+    ),
   },
   {
     title: 'User',
     href: '/users/me',
-    icon: (pathname: string) => <User fill={pathname === '/users/me'} />,
+    icon: (pathname: string) => (
+      <User strokeWidth={pathname === '/users/me' ? 2.5 : 2} />
+    ),
   },
 ];
 
