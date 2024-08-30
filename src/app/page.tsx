@@ -8,6 +8,7 @@ export default function Home() {
   const supabase = createClient();
   const [data, setData] = useState<any | null>(null);
   const [user, setUser] = useState<any | null>(null);
+  const [favorites, setFavorites] = useState<any[] | null>(null);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -16,19 +17,52 @@ export default function Home() {
       setData(data);
     };
 
-    const getMe = async () => {
-      const { data, error } = await supabase.auth.getUser();
-      setUser(data.user);
+    const getMeAndFavorites = async () => {
+      const { data: auth, error } = await supabase.auth.getUser();
+      if (error || !auth?.user) {
+        redirect('/login');
+      }
+      const { data: favorites } = await supabase
+        .from('favorites')
+        .select('*, posts(*)')
+        .eq('user_id', auth.user.id);
+      setUser(auth.user);
+      setFavorites(favorites);
     };
 
-    getMe();
+    getMeAndFavorites();
     fetchPosts();
   }, [supabase]);
 
   async function favoritePost(post_id: string) {
+    if (!favorites) return;
     await supabase
       .from('favorites')
       .insert({ user_id: user.id, post_id: post_id });
+    setFavorites([
+      ...favorites,
+      {
+        post_id: post_id,
+        user_id: user.id,
+      },
+    ]);
+  }
+
+  async function removeFavoritePost(post_id: string) {
+    if (!favorites) return;
+    setFavorites(
+      favorites.filter((favorite: any) => favorite.post_id != post_id),
+    );
+    await supabase
+      .from('favorites')
+      .delete()
+      .eq('user_id', user.id)
+      .eq('post_id', post_id);
+  }
+
+  function checkFavorite(post_id: string) {
+    console.log(favorites);
+    return favorites?.some((favorite) => favorite.post_id === post_id);
   }
 
   return (
@@ -45,12 +79,21 @@ export default function Home() {
               <p className="mb-4 text-lg text-zinc-600">{post.animals}</p>
               <p className="mb-4 text-lg text-zinc-600">{post.created_at}</p>
               <p className="mb-4 text-lg text-zinc-600">{post.updated_at}</p>
-              <button
-                className="rounded-lg border p-2"
-                onClick={() => favoritePost(post.id)}
-              >
-                この投稿をいいね
-              </button>
+              {checkFavorite(post.id) ? (
+                <button
+                  className="rounded-lg border p-2"
+                  onClick={() => removeFavoritePost(post.id)}
+                >
+                  いいねを解除する
+                </button>
+              ) : (
+                <button
+                  className="rounded-lg border p-2"
+                  onClick={() => favoritePost(post.id)}
+                >
+                  この投稿をいいね
+                </button>
+              )}
             </div>
           ))}
         </div>
