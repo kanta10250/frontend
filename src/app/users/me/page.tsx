@@ -1,28 +1,40 @@
-'use strict';
+'use client';
 
-export const runtime = 'edge';
-
-import { createClient } from '@/utils/supabase/server';
-import { redirect } from 'next/navigation';
+import { createClient } from '@/utils/supabase/client';
+import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 
-export default async function MePage() {
-    const supabase = createClient();
-    const { data, error } = await supabase.auth.getUser();
+export default function MePage() {
+  const supabase = createClient();
+  const router = useRouter();
+  const [data, setData] = useState<any>(null);
+  const [userData, setUserData] = useState<any>(null);
 
-    if (error || !data?.user) {
-        redirect('/login');
-    }
-  const id = data.user.id;
-  const userData = await supabase
-    .from('users')
-    .select('description, name')
-    .eq('id', id);
+  useEffect(() => {
+    const fetchUser = async () => {
+      const user = await supabase.auth.getUser();
+      setData(user);
 
-  console.log(userData?.data?.[0]);
+      if (!user) {
+        router.push('/login');
+      }
+
+      const id = user.data.user?.id;
+
+      const userData = await supabase
+        .from('users')
+        .select('description, name')
+        .eq('id', id);
+
+      setUserData(userData);
+    };
+
+    fetchUser();
+  }, [router, supabase, supabase.auth]);
 
   const avatarUrl = `https://ui-avatars.com/api/?name=${userData?.data?.[0]?.name}&size=512`;
-  const userName = data?.user?.user_metadata?.full_name;
+  const userName = data?.data?.user?.user_metadata?.full_name;
 
   return (
     <div className="flex flex-1 flex-col items-center justify-center px-20">
