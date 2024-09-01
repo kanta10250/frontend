@@ -13,6 +13,7 @@ export default function MePage() {
   const [description, setDescription] = useState<string>('');
   const [name, setName] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -54,50 +55,65 @@ export default function MePage() {
     if (error) {
       console.error('Error updating user:', error);
     } else {
-      // 成功時の処理
       setUserData((prev: any) => ({ ...prev, description, name }));
+      setIsEditing(false); // Close the form
     }
     setLoading(false);
   };
 
   return (
-    <div className="flex flex-1 flex-col items-center justify-center px-20">
-      <div className="flex w-full flex-col items-start rounded-lg border border-zinc-300 bg-white p-6">
+    <div className="flex flex-1 flex-col items-center justify-center px-4 py-10 sm:px-10">
+      <div className="flex w-full max-w-lg flex-col items-center bg-white p-6">
         <Image
           src={avatarUrl}
           alt={userName}
           width={100}
           height={100}
-          className="mb-4 h-20 w-20 rounded-full"
+          className="mb-4 h-24 w-24 rounded-full"
         />
-        <h1 className="mb-2 text-2xl font-semibold">{userName}</h1>
-        <p className="mb-4 text-lg text-zinc-600">
+        <h1 className="mb-2 text-2xl font-semibold text-gray-900">
+          {userName}
+        </h1>
+        <p className="mb-4 text-center text-lg text-gray-600">
           {userData?.description || 'No description'}
         </p>
 
-        {/* ユーザー情報更新フォーム */}
-        <div className="mt-4 w-full">
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Name"
-            className="mb-2 w-full rounded border border-zinc-300 p-2"
-          />
-          <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            placeholder="Description"
-            className="mb-4 w-full rounded border border-zinc-300 p-2"
-          />
+        {/* Update button */}
+        {!isEditing && (
           <button
-            onClick={handleUpdate}
-            disabled={loading}
-            className={`w-full rounded bg-blue-500 p-2 text-white ${loading ? 'opacity-50' : ''}`}
+            onClick={() => setIsEditing(true)}
+            className="mb-4 rounded-md bg-blue-500 px-4 py-2 text-white transition-colors duration-200 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
           >
-            {loading ? 'Updating...' : 'Update'}
+            変更する
           </button>
-        </div>
+        )}
+
+        {/* User data update form */}
+        {isEditing && (
+          <div className="mt-4 w-full">
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Name"
+              className="mb-3 w-full rounded-md border border-zinc-300 p-3 text-gray-800 focus:border-blue-500 focus:outline-none"
+            />
+            <textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="Description"
+              className="mb-4 w-full rounded-md border border-zinc-300 p-3 text-gray-800 focus:border-blue-500 focus:outline-none"
+              rows={4}
+            />
+            <button
+              onClick={handleUpdate}
+              disabled={loading}
+              className={`w-full rounded-md bg-blue-500 py-2 text-white transition-colors duration-200 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 ${loading ? 'cursor-not-allowed opacity-50' : ''}`}
+            >
+              {loading ? 'Updating...' : 'Update'}
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
