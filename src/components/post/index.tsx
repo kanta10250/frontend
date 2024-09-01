@@ -70,7 +70,6 @@ export default function Posts() {
       <div className="h-1/2 overflow-scroll p-5 px-5">
         <div className="rounded-xl bg-white p-5">
           <div className="flex max-w-full">
-            <h1 className="mb-4 text-2xl font-bold">投稿</h1>
             {complete ? (
               <button className="ml-auto" onClick={closeModal}>
                 <XIcon />
@@ -81,71 +80,76 @@ export default function Posts() {
           </div>
 
           {!complete ? (
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label
-                  htmlFor="name"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  公園 / 建物名
+            <form onSubmit={handleSubmit}>
+              <div className="mb-5">
+                <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+                  公園名 / 建物名
                 </label>
                 <input
                   type="text"
-                  placeholder="Name"
                   id="name"
                   name="name"
                   required
-                  className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
                 />
               </div>
-              <div>
+              <div className="mb-5">
                 <label
                   htmlFor="category"
-                  className="block text-sm font-medium text-gray-700"
+                  className="block text-sm font-medium text-gray-900"
                 >
-                  一緒に行ける動物
+                  一緒に散歩できるペット
                 </label>
-                <div className="mt-1">
-                  <label className="inline-flex items-center">
+
+                <div className="mt-2 flex">
+                  <div className="me-4 flex items-center">
                     <input
                       type="checkbox"
                       name="category"
                       value="犬"
-                      className="form-checkbox h-4 w-4 text-blue-600"
+                      className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
                     />
-                    <span className="ml-2">犬</span>
-                  </label>
-                  <label className="ml-4 inline-flex items-center">
+                    <label className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                      犬
+                    </label>
+                  </div>
+                  <div className="me-4 flex items-center">
                     <input
                       type="checkbox"
                       name="category"
                       value="猫"
-                      className="form-checkbox h-4 w-4 text-blue-600"
+                      className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
                     />
-                    <span className="ml-2">猫</span>
-                  </label>
+                    <label className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                      猫
+                    </label>
+                  </div>
+                  <div className="me-4 flex items-center">
+                    <input
+                      type="checkbox"
+                      name="category"
+                      value="その他"
+                      className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
+                    />
+                    <label className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                      その他
+                    </label>
+                  </div>
                 </div>
               </div>
-              <div>
-                <label
-                  htmlFor="description"
-                  className="block text-sm font-medium text-gray-700"
-                >
+              <div className="mb-5">
+                <label className="mb-2 block text-sm font-medium text-gray-900">
                   公園 / 建物の説明
                 </label>
                 <textarea
-                  placeholder="Description"
                   id="description"
                   name="description"
                   required
-                  className="mt-1 block w-full resize-none rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
-                />
+                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+                ></textarea>
               </div>
-              <div>
-                <label
-                  htmlFor="url"
-                  className="block text-sm font-medium text-gray-700"
-                >
+              <div className="mb-5">
+                <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
                   Google Map URL
                 </label>
                 <input
@@ -153,15 +157,15 @@ export default function Posts() {
                   placeholder="URL"
                   id="url"
                   name="url"
-                  className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
                 />
               </div>
               <div>
                 <button
                   type="submit"
-                  className="w-full rounded-md bg-blue-600 px-4 py-2 font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                  className="mb-2 me-2 w-full rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300"
                 >
-                  Submit
+                  投稿する
                 </button>
               </div>
             </form>
