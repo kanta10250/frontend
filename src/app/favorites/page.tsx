@@ -3,6 +3,12 @@
 import { createClient } from '@/utils/supabase/client';
 import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 export default function Favorites() {
   const supabase = createClient();
@@ -39,32 +45,42 @@ export default function Favorites() {
 
   return (
     <div className="flex flex-1 flex-col items-center justify-center overflow-scroll">
-      <div className="flex h-full flex-col px-10 py-20">
+      <div className="flex h-full w-full flex-col px-10 py-20">
         <h1 className="mb-4 text-2xl font-semibold">いいねした投稿</h1>
         <div className="flex flex-col space-y-4">
-          {favorites?.map((favorites: any) => (
+          {favorites?.map((favorite: any) => (
             <div
-              key={favorites.id}
-              className="flex flex-col rounded-lg border border-zinc-300 bg-white p-6"
+              key={favorite.id}
+              className="block max-w-sm rounded-lg border border-gray-200 bg-white p-6 shadow"
             >
-              <h1 className="mb-2 text-xl font-semibold">
-                {favorites.posts.name}
+              <h1 className="mb-2 text-xl font-semibold text-gray-900">
+                {favorite.posts.name}
               </h1>
-              <p className="mb-4 text-lg text-zinc-600">
-                {favorites.posts.animals}
+              <p className="mb-4 text-base text-gray-600">
+                一緒に行けるペット: {favorite.posts.animals}
               </p>
-              <p className="mb-4 text-lg text-zinc-600">
-                {favorites.posts.created_at}
-              </p>
-              <p className="mb-4 text-lg text-zinc-600">
-                {favorites.posts.updated_at}
-              </p>
-              <button
-                className="rounded-lg border p-2"
-                onClick={() => removeFavoritePost(favorites.posts.id)}
-              >
-                いいねを解除する
-              </button>
+              <div className="flex items-end justify-between">
+                <div>
+                  <p className="mb-2 text-xs text-gray-500">
+                    作成日:{' '}
+                    {dayjs(favorite.posts.created_at)
+                      .tz('Asia/Tokyo')
+                      .format('YYYY-MM-DD HH:mm')}
+                  </p>
+                  <p className="text-xs text-gray-500">
+                    更新日:{' '}
+                    {dayjs(favorite.posts.updated_at)
+                      .tz('Asia/Tokyo')
+                      .format('YYYY-MM-DD HH:mm')}
+                  </p>
+                </div>
+                <button
+                  className="cursor-pointer text-red-500 hover:text-red-600"
+                  onClick={() => removeFavoritePost(favorite.posts.id)}
+                >
+                  いいねを解除する
+                </button>
+              </div>
             </div>
           ))}
         </div>
