@@ -80,7 +80,7 @@ export default function Home() {
           {data?.map((post: any) => (
             <div
               key={post.id}
-              className="block max-w-sm rounded-lg border border-gray-200 bg-white p-6 shadow"
+              className="block rounded-lg border border-gray-200 bg-white p-6 shadow"
             >
               <h1 className="mb-2 text-xl font-semibold text-gray-900">
                 {post.name}
