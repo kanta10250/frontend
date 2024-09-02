@@ -6,6 +6,7 @@ import { useActionContext } from '@/context/actionContext';
 import { useState } from 'react';
 import { XIcon } from 'lucide-react';
 import { fetchLocation } from '../../utils/react-leaflet/fetchLocation';
+import { redirect } from 'next/navigation';
 
 export default function Posts() {
   const supabase = createClient();
@@ -40,6 +41,12 @@ export default function Posts() {
       return;
     }
 
+    const user = await supabase.auth.getUser();
+
+    if (!user) {
+      redirect('/login');
+    }
+
     const { data, error } = await supabase.from('posts').insert([
       {
         name,
@@ -50,6 +57,7 @@ export default function Posts() {
         google_map_url: url,
         created_at: new Date(),
         updated_at: new Date(),
+        user_id: user.data.user?.id,
       },
     ]);
 
