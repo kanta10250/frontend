@@ -63,6 +63,7 @@ export default function Posts() {
 
     if (error) {
       console.error('error', error);
+      alert('Failed to submit');
     } else {
       console.log('data', data);
       SetCompleteSubmit(true);
