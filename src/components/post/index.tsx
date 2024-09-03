@@ -90,7 +90,7 @@ export default function Posts() {
           {!complete ? (
             <form onSubmit={handleSubmit}>
               <div className="mb-5">
-                <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+                <label className="mb-2 block text-sm font-medium text-gray-900">
                   公園名 / 建物名
                 </label>
                 <input
@@ -117,7 +117,7 @@ export default function Posts() {
                       value="犬"
                       className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
                     />
-                    <label className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                    <label className="ms-2 text-sm font-medium text-gray-900">
                       犬
                     </label>
                   </div>
@@ -128,7 +128,7 @@ export default function Posts() {
                       value="猫"
                       className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
                     />
-                    <label className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                    <label className="ms-2 text-sm font-medium text-gray-900">
                       猫
                     </label>
                   </div>
@@ -139,7 +139,7 @@ export default function Posts() {
                       value="その他"
                       className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
                     />
-                    <label className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                    <label className="ms-2 text-sm font-medium text-gray-900">
                       その他
                     </label>
                   </div>
@@ -157,7 +157,7 @@ export default function Posts() {
                 ></textarea>
               </div>
               <div className="mb-5">
-                <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+                <label className="mb-2 block text-sm font-medium text-gray-900">
                   Google Map URL
                 </label>
                 <input
