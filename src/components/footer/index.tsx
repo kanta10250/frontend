@@ -74,7 +74,7 @@ export default function Footer() {
           item.title === 'Post' || item.title === 'Map' ? (
             <button
               key={index}
-              onClick={toggle}
+              onClick={item.title === 'Map' ? disabledButtonState : toggle}
               className="cursor-pointer rounded-full bg-white p-2 px-4"
             >
               {item.icon(buttonState ? 'true' : 'false', pathname)}
