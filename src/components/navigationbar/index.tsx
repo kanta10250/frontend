@@ -30,6 +30,11 @@ export default function Navigation() {
     }
   }, [isClicked]);
 
+  // ページを開いた際に現在地を取得
+  useEffect(() => {
+    clickHandler();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   function clickHandler() {
     const geolocation = navigator.geolocation;
 
