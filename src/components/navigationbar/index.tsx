@@ -3,9 +3,11 @@
 import { useEffect, useState } from 'react';
 import { useMap } from 'react-leaflet';
 import { Locate, LocateFixed, Plus, Minus } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 
 export default function Navigation() {
   const map = useMap();
+  const pathname = usePathname();
   const [icon, setIcon] = useState(<Locate />);
   const [isClicked, setIsClicked] = useState(false);
 
@@ -32,8 +34,11 @@ export default function Navigation() {
 
   // ページを開いた際に現在地を取得
   useEffect(() => {
-    clickHandler();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    const regex = '/maps/[a-z0-9-]{36}';
+    if (!pathname.match(regex)) {
+      clickHandler();
+    }
+  }, [pathname]); // eslint-disable-line react-hooks/exhaustive-deps
 
   function clickHandler() {
     const geolocation = navigator.geolocation;
