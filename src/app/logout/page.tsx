@@ -13,7 +13,7 @@ export default function Logout() {
   };
 
   return (
-    <div className="flex h-screen flex-col items-center justify-center space-y-5">
+    <div className="flex h-screen flex-col items-center justify-center space-y-5 text-center">
       <h1>ログアウトする場合は以下のボタンをクリックしてください</h1>
       <button
         onClick={handleLogout}
