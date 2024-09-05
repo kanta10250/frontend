@@ -7,6 +7,7 @@ import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 import { Heart, HeartOff } from 'lucide-react';
+import Link from 'next/link';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -78,48 +79,47 @@ export default function Home() {
         <h1 className="mb-4 text-2xl font-semibold">投稿</h1>
         <div className="flex flex-col space-y-4">
           {data?.map((post: any) => (
-            <div
-              key={post.id}
-              className="block rounded-lg border border-gray-200 bg-white p-6 shadow"
-            >
-              <h1 className="mb-2 text-xl font-semibold text-gray-900">
-                {post.name}
-              </h1>
-              <p className="mb-4 text-base text-gray-600">
-                一緒に行けるペット: {post.animals}
-              </p>
-              <div className="flex items-end justify-between">
-                <div>
-                  <p className="mb-2 text-xs text-gray-500">
-                    作成日:{' '}
-                    {dayjs(post.created_at)
-                      .tz('Asia/Tokyo')
-                      .format('YYYY-MM-DD HH:mm')}
-                  </p>
-                  <p className="text-xs text-gray-500">
-                    更新日:{' '}
-                    {dayjs(post.updated_at)
-                      .tz('Asia/Tokyo')
-                      .format('YYYY-MM-DD HH:mm')}
-                  </p>
-                </div>
-                <div className="flex items-center space-x-2">
-                  {checkFavorite(post.id) ? (
-                    <Heart
-                      fill="currentColor"
-                      className="cursor-pointer text-red-500 hover:text-red-600"
-                      onClick={() => removeFavoritePost(post.id)}
-                    />
-                  ) : (
-                    <Heart
-                      className="cursor-pointer text-red-300 hover:text-red-400"
-                      onClick={() => favoritePost(post.id)}
-                    />
-                  )}
-                  <span className="text-sm text-red-600">{post.like}</span>
+            <Link href={`/maps/${post.id}`} key={post.id}>
+              <div className="block rounded-lg border border-gray-200 bg-white p-6 shadow">
+                <h1 className="mb-2 text-xl font-semibold text-gray-900">
+                  {post.name}
+                </h1>
+                <p className="mb-4 text-base text-gray-600">
+                  一緒に行けるペット: {post.animals}
+                </p>
+                <div className="flex items-end justify-between">
+                  <div>
+                    <p className="mb-2 text-xs text-gray-500">
+                      作成日:{' '}
+                      {dayjs(post.created_at)
+                        .tz('Asia/Tokyo')
+                        .format('YYYY-MM-DD HH:mm')}
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      更新日:{' '}
+                      {dayjs(post.updated_at)
+                        .tz('Asia/Tokyo')
+                        .format('YYYY-MM-DD HH:mm')}
+                    </p>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    {checkFavorite(post.id) ? (
+                      <Heart
+                        fill="currentColor"
+                        className="cursor-pointer text-red-500 hover:text-red-600"
+                        onClick={() => removeFavoritePost(post.id)}
+                      />
+                    ) : (
+                      <Heart
+                        className="cursor-pointer text-red-300 hover:text-red-400"
+                        onClick={() => favoritePost(post.id)}
+                      />
+                    )}
+                    <span className="text-sm text-red-600">{post.like}</span>
+                  </div>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
