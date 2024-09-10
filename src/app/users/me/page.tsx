@@ -3,6 +3,7 @@
 import { createClient } from '@/utils/supabase/client';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
 
 export default function MePage() {
@@ -80,12 +81,20 @@ export default function MePage() {
 
         {/* Update button */}
         {!isEditing && (
-          <button
-            onClick={() => setIsEditing(true)}
-            className="mb-4 rounded-md bg-blue-500 px-4 py-2 text-white transition-colors duration-200 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
-          >
-            変更する
-          </button>
+          <div className="flex flex-row space-x-4">
+            <button
+              onClick={() => setIsEditing(true)}
+              className="mb-4 rounded-md bg-blue-500 px-4 py-2 text-white transition-colors duration-200 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
+            >
+              変更する
+            </button>
+            <Link
+              href="/logout"
+              className="mb-4 rounded-md bg-blue-500 px-4 py-2 text-white transition-colors duration-200 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
+            >
+              ログアウト
+            </Link>
+          </div>
         )}
 
         {/* User data update form */}
