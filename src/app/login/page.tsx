@@ -24,7 +24,7 @@ export default function LoginPage() {
   }, [router, supabase]);
 
   return (
-    <div className="mx-auto flex h-screen max-w-md flex-col items-center justify-center p-4">
+    <div className="mx-auto flex h-screen w-screen flex-col items-center justify-center p-4">
       {!loading && (
         <button
           type="button"

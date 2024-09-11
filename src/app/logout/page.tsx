@@ -17,9 +17,9 @@ export default function Logout() {
       <h1>ログアウトする場合は以下のボタンをクリックしてください</h1>
       <button
         onClick={handleLogout}
-        className="rounded-md bg-blue-500 p-2 text-white"
+        className="inline-flex w-full max-w-sm items-center justify-center gap-x-2 rounded-lg border-2 border-black bg-white px-20 py-3 text-sm font-semibold text-gray-800 shadow-sm hover:bg-gray-50 focus:bg-gray-50 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
       >
-        ログアウト
+        ログアウトする
       </button>
     </div>
   );
