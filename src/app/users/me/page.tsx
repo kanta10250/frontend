@@ -1,16 +1,22 @@
 'use client';
 
 import { createClient } from '@/utils/supabase/client';
-import { useRouter } from 'next/navigation';
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import type { UserResponse } from '@supabase/supabase-js';
 
 export default function MePage() {
   const supabase = createClient();
   const router = useRouter();
-  const [data, setData] = useState<any>(null);
-  const [userData, setUserData] = useState<any>(null);
+  interface UserProfile {
+    description: string;
+    name: string;
+  }
+
+  const [data, setData] = useState<UserResponse | null>(null);
+  const [userData, setUserData] = useState<UserProfile | null>(null);
   const [description, setDescription] = useState<string>('');
   const [name, setName] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
@@ -46,7 +52,7 @@ export default function MePage() {
 
   const handleUpdate = async () => {
     setLoading(true);
-    const id = data.data.user?.id;
+    const id = data?.data.user?.id;
 
     const { error } = await supabase
       .from('users')
@@ -56,7 +62,10 @@ export default function MePage() {
     if (error) {
       console.error('Error updating user:', error);
     } else {
-      setUserData((prev: any) => ({ ...prev, description, name }));
+      setUserData(
+        (prev: UserProfile | null) =>
+          ({ ...prev, description, name }) as UserProfile,
+      );
       setIsEditing(false); // Close the form
     }
     setLoading(false);
@@ -67,7 +76,7 @@ export default function MePage() {
       <div className="flex w-full max-w-lg flex-col items-center bg-white p-6">
         <Image
           src={avatarUrl}
-          alt={userName}
+          alt={userName ?? 'User avatar'}
           width={100}
           height={100}
           className="mb-4 h-24 w-24 rounded-full"
@@ -83,6 +92,7 @@ export default function MePage() {
         {!isEditing && (
           <div className="flex flex-row space-x-4">
             <button
+              type="button"
               onClick={() => setIsEditing(true)}
               className="mb-4 rounded-md bg-blue-500 px-4 py-2 text-white transition-colors duration-200 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
             >
@@ -115,6 +125,7 @@ export default function MePage() {
               rows={4}
             />
             <button
+              type="button"
               onClick={handleUpdate}
               disabled={loading}
               className={`w-full rounded-md bg-blue-500 py-2 text-white transition-colors duration-200 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 ${loading ? 'cursor-not-allowed opacity-50' : ''}`}

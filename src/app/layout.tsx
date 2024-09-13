@@ -1,16 +1,17 @@
-import type { Metadata } from 'next';
-import { ActionProvider } from '@/context/actionContext';
-import { MarkerProvider } from '@/context/markerContext';
-import { Noto_Sans_JP } from 'next/font/google';
 import Container from '@/components/container';
 import Footer from '@/components/footer';
+import { ActionProvider } from '@/context/actionContext';
+import { MarkerProvider } from '@/context/markerContext';
+import type { Metadata } from 'next';
+import { Noto_Sans_JP } from 'next/font/google';
 import './globals.css';
 
 const notoSansJP = Noto_Sans_JP({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Howsky',
-  description: 'You can share your recommendations for places you would like to visit!',
+  description:
+    'You can share your recommendations for places you would like to visit!',
 };
 
 export default function RootLayout({

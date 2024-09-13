@@ -1,22 +1,41 @@
 'use client';
 
 import { createClient } from '@/utils/supabase/client';
-import { redirect } from 'next/navigation';
-import { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
 import { Heart, HeartOff } from 'lucide-react';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
 export default function Home() {
   const supabase = createClient();
-  const [data, setData] = useState<any | null>(null);
-  const [user, setUser] = useState<any | null>(null);
-  const [favorites, setFavorites] = useState<any[] | null>(null);
+  interface Post {
+    id: string;
+    name: string;
+    animals: string;
+    created_at: string;
+    updated_at: string;
+    like: number;
+  }
+
+  interface User {
+    id: string;
+    email: string | undefined;
+  }
+
+  interface Favorite {
+    post_id: string;
+    user_id: string;
+  }
+
+  const [data, setData] = useState<Post[] | null>(null);
+  const [user, setUser] = useState<User | null>(null);
+  const [favorites, setFavorites] = useState<Favorite[] | null>(null);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -35,7 +54,10 @@ export default function Home() {
         .from('favorites')
         .select('*, posts(*)')
         .eq('user_id', auth.user.id);
-      setUser(auth.user);
+      setUser({
+        id: auth.user.id,
+        email: auth.user.email,
+      });
       setFavorites(favorites);
     };
 
@@ -45,6 +67,7 @@ export default function Home() {
 
   async function favoritePost(post_id: string) {
     if (!favorites) return;
+    if (!user) return;
     await supabase
       .from('favorites')
       .insert({ user_id: user.id, post_id: post_id });
@@ -60,12 +83,12 @@ export default function Home() {
   async function removeFavoritePost(post_id: string) {
     if (!favorites) return;
     setFavorites(
-      favorites.filter((favorite: any) => favorite.post_id != post_id),
+      favorites.filter((favorite: Favorite) => favorite.post_id !== post_id),
     );
     await supabase
       .from('favorites')
       .delete()
-      .eq('user_id', user.id)
+      .eq('user_id', user?.id)
       .eq('post_id', post_id);
   }
 
@@ -78,7 +101,7 @@ export default function Home() {
       <div className="flex h-full w-full flex-col px-10 py-20">
         <h1 className="mb-4 text-2xl font-semibold">投稿</h1>
         <div className="flex flex-col space-y-4">
-          {data?.map((post: any) => (
+          {data?.map((post: Post) => (
             <div
               key={post.id}
               className="block rounded-lg border border-gray-200 bg-white p-6 shadow"

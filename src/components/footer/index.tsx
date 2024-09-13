@@ -1,19 +1,20 @@
 'use client';
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import { useActionContext } from '@/context/actionContext';
 import { useMarkerContext } from '@/context/markerContext';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useRouter } from 'next/navigation';
-
-import { Map, Pen, House, Heart, User } from 'lucide-react';
+import { Heart, House, Map as MapIcon, Pen, User } from 'lucide-react';
 
 const list = [
   {
     title: 'Map',
     href: '/maps',
     icon: (state: string, pathname?: string) => (
-      <Map strokeWidth={state === 'false' && pathname === '/maps' ? 2.5 : 2} />
+      <MapIcon
+        strokeWidth={state === 'false' && pathname === '/maps' ? 2.5 : 2}
+      />
     ),
   },
   {
@@ -70,10 +71,11 @@ export default function Footer() {
   return (
     <footer className="flex max-h-fit justify-center bg-white px-5 text-center text-zinc-900 md:hidden">
       <div className="flex w-full max-w-md justify-between p-3">
-        {list.map((item, index) =>
+        {list.map((item) =>
           item.title === 'Post' || item.title === 'Map' ? (
             <button
-              key={index}
+              type="button"
+              key={item.title}
               onClick={
                 item.title === 'Map'
                   ? () => {
@@ -88,7 +90,7 @@ export default function Footer() {
             </button>
           ) : (
             <Link
-              key={index}
+              key={item.title}
               href={item.href}
               onClick={togglePage}
               className="cursor-pointer rounded-full bg-white p-2 px-4"

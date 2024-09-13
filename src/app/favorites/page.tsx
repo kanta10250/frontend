@@ -1,19 +1,36 @@
 'use client';
 
 import { createClient } from '@/utils/supabase/client';
+import dayjs from 'dayjs';
+import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
 import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-import timezone from 'dayjs/plugin/timezone';
+
+interface Favorite {
+  id: string;
+  post_id: string;
+  user_id: string;
+  posts: {
+    id: string;
+    name: string;
+    animals: string;
+    created_at: string;
+    updated_at: string;
+  };
+}
+
+interface User {
+  id: string;
+}
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
 export default function Favorites() {
   const supabase = createClient();
-  const [favorites, setFavorites] = useState<any | null>(null);
-  const [user, setUser] = useState<any | null>(null);
+  const [favorites, setFavorites] = useState<Favorite[] | null>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,12 +51,14 @@ export default function Favorites() {
 
   async function removeFavoritePost(post_id: string) {
     setFavorites(
-      favorites.filter((favorite: any) => favorite.posts.id != post_id),
+      favorites?.filter(
+        (favorite: Favorite) => favorite.posts.id !== post_id,
+      ) || [],
     );
     await supabase
       .from('favorites')
       .delete()
-      .eq('user_id', user.id)
+      .eq('user_id', user?.id)
       .eq('post_id', post_id);
   }
 
@@ -48,7 +67,7 @@ export default function Favorites() {
       <div className="flex h-full w-full flex-col px-10 py-20">
         <h1 className="mb-4 text-2xl font-semibold">いいねした投稿</h1>
         <div className="flex flex-col space-y-4">
-          {favorites?.map((favorite: any) => (
+          {favorites?.map((favorite: Favorite) => (
             <div
               key={favorite.id}
               className="block rounded-lg border border-gray-200 bg-white p-6 shadow"
@@ -75,6 +94,7 @@ export default function Favorites() {
                   </p>
                 </div>
                 <button
+                  type="button"
                   className="cursor-pointer text-red-500 hover:text-red-600"
                   onClick={() => removeFavoritePost(favorite.posts.id)}
                 >

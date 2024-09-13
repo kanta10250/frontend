@@ -1,9 +1,9 @@
 'use client';
 
+import { Locate, LocateFixed, Minus, Plus } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useMap } from 'react-leaflet';
-import { Locate, LocateFixed, Plus, Minus } from 'lucide-react';
-import { usePathname } from 'next/navigation';
 
 export default function Navigation() {
   const map = useMap();
@@ -74,6 +74,7 @@ export default function Navigation() {
         {map && (
           <div className="flex flex-col items-center rounded-xl bg-white p-2">
             <button
+              type="button"
               className="rounded-md p-2 text-black hover:bg-gray-100"
               aria-label="Zoom In"
               onClick={mapZoomIn}
@@ -81,6 +82,7 @@ export default function Navigation() {
               <Plus />
             </button>
             <button
+              type="button"
               className="rounded-md p-2 text-black hover:bg-gray-100"
               aria-label="Zoom Out"
               onClick={mapZoomOut}
@@ -88,6 +90,7 @@ export default function Navigation() {
               <Minus />
             </button>
             <button
+              type="button"
               className="rounded-md p-2 text-black hover:bg-gray-100"
               aria-label="Navigation"
               onClick={clickHandler}

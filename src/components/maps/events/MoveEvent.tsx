@@ -1,9 +1,14 @@
-import { useMapEvents } from 'react-leaflet';
-import { fetchLocation } from '../../../utils/react-leaflet/fetchLocation';
 import { createClient } from '@/utils/supabase/client';
 import L from 'leaflet';
-import { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useRef, useState } from 'react';
+import { useMapEvents } from 'react-leaflet';
+import { fetchLocation } from '../../../utils/react-leaflet/fetchLocation';
+
+interface Point {
+  id: string;
+  location: string;
+}
 
 export default function MoveEvent() {
   const supabase = createClient();
@@ -34,7 +39,7 @@ export default function MoveEvent() {
       if (!data) return;
       const newMarkers = new Set<string>(addedMarkers);
 
-      data.map((point: any) => {
+      data.map((point: Point) => {
         const locationText = point.location.split(',');
 
         if (!newMarkers.has(point.location)) {

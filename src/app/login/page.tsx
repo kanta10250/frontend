@@ -1,8 +1,8 @@
 'use client';
 
 import { createClient } from '@/utils/supabase/client';
-import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export default function LoginPage() {
   const supabase = createClient();
@@ -32,9 +32,6 @@ export default function LoginPage() {
           onClick={() =>
             supabase.auth.signInWithOAuth({
               provider: 'google',
-              options: {
-                redirectTo: `https://nnumokzmtyweliunffwv.supabase.co/auth/v1/callback`,
-              },
             })
           }
         >

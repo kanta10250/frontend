@@ -1,10 +1,10 @@
-import { useMapEvent } from 'react-leaflet';
-import L from 'leaflet';
-import { useMarkerContext } from '@/context/markerContext';
 import { useActionContext } from '@/context/actionContext';
+import { useMarkerContext } from '@/context/markerContext';
+import L from 'leaflet';
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';
+import { useMapEvent } from 'react-leaflet';
 
 L.Icon.Default.mergeOptions({
   iconUrl: markerIcon.src,

@@ -1,10 +1,10 @@
 'use client';
 
-import dynamic from 'next/dynamic';
 import Posts from '@/components/post';
 import { useActionContext } from '@/context/actionContext';
+import dynamic from 'next/dynamic';
 
-const Map = dynamic(() => import('@/components/maps'), { ssr: false });
+const DynamicMap = dynamic(() => import('@/components/maps'), { ssr: false });
 
 export default function Maps() {
   const { buttonState } = useActionContext();
@@ -12,7 +12,7 @@ export default function Maps() {
 
   return (
     <div className="relative flex h-full flex-col bg-stone-200">
-      <Map />
+      <DynamicMap />
       {buttonState ? <Posts /> : null}
     </div>
   );

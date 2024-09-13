@@ -1,12 +1,24 @@
 'use client';
 import { Cat, Dog } from 'lucide-react';
 import dynamic from 'next/dynamic';
-const Map = dynamic(() => import('@/components/maps'), { ssr: false });
+const DynamicMap = dynamic(() => import('@/components/maps'), { ssr: false });
 
-export default function PostDetails(props: any) {
+interface Post {
+  id: string;
+  name: string;
+  animals: string;
+  created_at: string;
+  updated_at: string;
+  like: number;
+  description: string;
+  keywords: string;
+  location: string;
+}
+
+export default function PostDetails(props: { post: Post }) {
   return (
     <div className="relative z-[9998] flex h-full flex-col bg-stone-200">
-      <Map pinnedLocation={props.post.location} />
+      <DynamicMap pinnedLocation={props.post.location} />
       <div className="absolute bottom-0 left-0 z-[99999] flex w-full flex-col">
         <div className="h-1/2 overflow-scroll p-5 px-5">
           <div className="rounded-xl bg-white p-5">

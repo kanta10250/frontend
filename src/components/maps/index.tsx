@@ -2,9 +2,9 @@ import Navigation from '@/components/navigationbar';
 import { MapContainer, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import './style.css';
-import MarkerEvent from './events/MarkerEvent';
-import { useMap } from 'react-leaflet';
 import L from 'leaflet';
+import { useMap } from 'react-leaflet';
+import MarkerEvent from './events/MarkerEvent';
 import MoveEvent from './events/MoveEvent';
 
 function FlyToLocation({ pinnedLocation }: { pinnedLocation?: string }) {
@@ -20,7 +20,7 @@ function FlyToLocation({ pinnedLocation }: { pinnedLocation?: string }) {
   return null;
 }
 
-export default function Map(props: { pinnedLocation?: string }) {
+export default function CustomMap(props: { pinnedLocation?: string }) {
   return (
     <div className="flex h-full flex-col">
       <MapContainer

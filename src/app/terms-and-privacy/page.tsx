@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 
 const Section = ({
   title,
@@ -32,8 +32,8 @@ const Paragraph = ({ children }: { children: React.ReactNode }) => (
 
 const List = ({ items }: { items: string[] }) => (
   <ul className="mb-4 ml-2 list-inside list-disc text-sm">
-    {items.map((item, index) => (
-      <li key={index}>{item}</li>
+    {items.map((item) => (
+      <li key={item}>{item}</li>
     ))}
   </ul>
 );

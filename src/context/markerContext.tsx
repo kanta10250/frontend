@@ -1,7 +1,7 @@
 'use client';
 
-import { createContext, useState, useContext, ReactNode } from 'react';
-import L from 'leaflet';
+import type L from 'leaflet';
+import { type ReactNode, createContext, useContext, useState } from 'react';
 
 // Type definition of context
 interface MarkerContextType {
