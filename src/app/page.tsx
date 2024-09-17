@@ -4,7 +4,7 @@ import { createClient } from '@/utils/supabase/client';
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
-import { Heart, HeartOff } from 'lucide-react';
+import { Heart } from 'lucide-react';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -100,12 +100,9 @@ export default function Home() {
     <div className="flex flex-1 flex-col items-center justify-center overflow-scroll">
       <div className="flex h-full w-full flex-col px-10 py-20">
         <h1 className="mb-4 text-2xl font-semibold">投稿</h1>
-        <div className="flex flex-col space-y-4">
+        <div className="flex flex-col divide-y divide-gray-200">
           {data?.map((post: Post) => (
-            <div
-              key={post.id}
-              className="block rounded-lg border border-gray-200 bg-white p-6 shadow"
-            >
+            <div key={post.id} className="block bg-white py-4">
               <Link href={`/maps/${post.id}`}>
                 <h1 className="mb-2 text-xl font-semibold text-gray-900">
                   {post.name}
@@ -117,14 +114,8 @@ export default function Home() {
               <div className="flex items-end justify-between">
                 <div>
                   <p className="mb-2 text-xs text-gray-500">
-                    作成日:{' '}
+                    投稿日:{' '}
                     {dayjs(post.created_at)
-                      .tz('Asia/Tokyo')
-                      .format('YYYY-MM-DD HH:mm')}
-                  </p>
-                  <p className="text-xs text-gray-500">
-                    更新日:{' '}
-                    {dayjs(post.updated_at)
                       .tz('Asia/Tokyo')
                       .format('YYYY-MM-DD HH:mm')}
                   </p>
